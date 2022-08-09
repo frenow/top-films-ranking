@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import ReactStars from "react-rating-stars-component";
 import { GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
 import { auth } from './services/firebase';
 import IconButton from '@mui/material/IconButton';
-import GoogleIcon from '@mui/icons-material/Google';
 
+import Rating from '@mui/material/Rating';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,6 +12,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
+import Tooltip from '@mui/material/Tooltip';
+
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import CardMedia from '@mui/material/CardMedia';
+
 
 import './App.css';
 const API_KEY = 'd416af5d4faee64e25ab001d87aab5c3';
@@ -36,17 +43,6 @@ function App() {
     )
   }
 
-
-  const rating = {
-    size: 30,
-    count: 5,
-    value: star,
-    onChange: newValue => {
-      setStar(newValue);
-      console.log(`Example 2: new value is ${newValue}`);
-    }
-  };  
-
   useEffect(() => {
     (async () => {
     const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular/?api_key=${API_KEY}`);
@@ -57,9 +53,8 @@ function App() {
 }, []);
 
   return (
-    <div className="App">
-
-<AppBar position="static">
+  <>
+  <AppBar position="static" alignItems="center">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
         <Typography
@@ -70,7 +65,6 @@ function App() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
@@ -82,26 +76,42 @@ function App() {
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Box sx={{ flexGrow: 0 }}>
               <IconButton>
+              <Tooltip title={user?.displayName} placement="bottom">
                 <Avatar alt={user?.displayName} src={user?.photoURL} />
+              </Tooltip>          
               </IconButton>
+               <img src={user?.photoURL} alt={user?.displayName} className="App-avatar" style={{ display: "none" }} />
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
 
-    <IconButton aria-label="Entrar com google" color="primary">
-        <GoogleIcon onClick={handleGoogleSignin} />
-    </IconButton>         
-        <ul style={{ listStyle: "none" }}>
-        {movies.map(movie => (
-        <div className="App-list">
-          <div className="App-card">
-              <li key={movie.id}>{movie.title}<ReactStars {...rating} /><img src={"https://image.tmdb.org/t/p/original"+movie.poster_path} alt="poster" width="60" height="70"/></li>
-          </div>
-        </div>
+    <div className="App">
+      <Button onClick={handleGoogleSignin} fontSize="large" color="primary" variant="contained">Entrar com google</Button>
+
+      {movies.map(movie => (
+      <div key={movie.id} className="App-list">
+              <Card sx={{ minWidth: 400 }}>
+                <CardMedia
+                  component="img"
+                  height="400"
+                  image={"https://image.tmdb.org/t/p/original"+movie.poster_path}
+                  alt={movie.title}
+                />  
+                <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                {movie.title}
+                </Typography>
+                </CardContent>
+                <Rating name="ranking-star" value={star} onChange={(event, newValue) => { setStar(newValue) }} /> 
+                <CardActions>
+                  <Button size="small">Saiba mais</Button>
+                </CardActions>
+              </Card>  
+              </div>
         ))}
-        </ul>
-    </div>
+      </div>
+    </>
   );
 }
 

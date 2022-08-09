@@ -1,5 +1,7 @@
 .App {  
   text-align: center;
+  background-color: #282c34;
+  padding-top: 10px;
 }
 
 .App-logo {
@@ -28,4 +30,11 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.App-avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }

@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
-import Tooltip from '@mui/material/Tooltip';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -76,11 +75,9 @@ function App() {
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Box sx={{ flexGrow: 0 }}>
               <IconButton>
-              <Tooltip title={user?.displayName} placement="bottom">
-                <Avatar alt={user?.displayName} src={user?.photoURL} />
-              </Tooltip>          
+                <Avatar alt={user.displayName} src={user.photoURL} />
               </IconButton>
-               <img src={user?.photoURL} alt={user?.displayName} className="App-avatar" style={{ display: "none" }} />
+               <img src={user.photoURL} alt={user.displayName} className="App-avatar" style={{ display: "none" }} />
           </Box>
         </Toolbar>
       </Container>

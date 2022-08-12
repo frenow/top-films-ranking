@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
 import { auth } from './services/firebase';
-import IconButton from '@mui/material/IconButton';
 
 import Rating from '@mui/material/Rating';
 import AppBar from '@mui/material/AppBar';
@@ -10,7 +9,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
 
 import Card from '@mui/material/Card';
@@ -71,9 +69,9 @@ function App() {
           </Typography>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Box sx={{ flexGrow: 0 }}>
-              <IconButton>
+              {/*<IconButton>
                 <Avatar alt={user.displayName} src={user.photoURL} />
-              </IconButton>
+              </IconButton>*/}
                <img src={user.photoURL} alt={user.displayName} className="App-avatar" style={{ display: "box" }} />
           </Box>
         </Toolbar>

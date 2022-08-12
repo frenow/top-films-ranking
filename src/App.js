@@ -18,10 +18,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
-
-
 import './App.css';
-const API_KEY = 'd416af5d4faee64e25ab001d87aab5c3';
 
 function App() {
   const [user, setUser] = useState([]);
@@ -44,7 +41,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-    const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular/?api_key=${API_KEY}`);
+    const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular/?api_key=d416af5d4faee64e25ab001d87aab5c3`);
     setMovies(data.results);
     console.log(data.results); 
   })();  
@@ -53,7 +50,7 @@ function App() {
 
   return (
   <>
-  <AppBar position="static" alignItems="center">
+  <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
         <Typography

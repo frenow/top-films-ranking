@@ -39,7 +39,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-    const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular/?api_key=d416af5d4faee64e25ab001d87aab5c3`);
+    const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular/?api_key=d416af5d4faee64e25ab001d87aab5c3/`);
     setMovies(data.results);
     console.log(data.results); 
   })();  

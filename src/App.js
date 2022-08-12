@@ -74,7 +74,7 @@ function App() {
               <IconButton>
                 <Avatar alt={user.displayName} src={user.photoURL} />
               </IconButton>
-               <img src={user.photoURL} alt={user.displayName} className="App-avatar" style={{ display: "none" }} />
+               <img src={user.photoURL} alt={user.displayName} className="App-avatar" style={{ display: "box" }} />
           </Box>
         </Toolbar>
       </Container>

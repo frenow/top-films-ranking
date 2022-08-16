@@ -34,8 +34,10 @@ function App() {
 
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    fetchMovieDetalhe();
+  const handleClickOpen = async (id) => {
+    const { data } = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=d416af5d4faee64e25ab001d87aab5c3`);
+    console.log(data); 
+    setMovieDetalhe(data);
     setOpen(true);
   };  
 
@@ -43,11 +45,6 @@ function App() {
     setOpen(false);
   };  
 
-  async function fetchMovieDetalhe() {
-    const { data } = await axios.get(`https://api.themoviedb.org/3/movie/616037?api_key=d416af5d4faee64e25ab001d87aab5c3`);
-    console.log(data.results); 
-    setMovieDetalhe(data.results);
-  }
 
   function handleGoogleSignin(){
     const provider = new GoogleAuthProvider();
@@ -66,7 +63,6 @@ function App() {
     (async () => {
     const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=d416af5d4faee64e25ab001d87aab5c3`);
     setMovies(data.results);
-    console.log(data.results); 
   })();  
 
 }, []);
@@ -119,7 +115,7 @@ function App() {
                 </CardContent>
                 <Rating name="ranking-star" value={star} onChange={(event, newValue) => { setStar(newValue) }} /> 
                 <CardActions>
-                  <Button size="small" onClick={() => handleClickOpen()}>Saiba mais</Button>
+                  <Button size="small" onClick={() => handleClickOpen(movie.id)}>Saiba mais</Button>
                 </CardActions>
               </Card>
               <Dialog
@@ -129,11 +125,11 @@ function App() {
                 aria-describedby="alert-dialog-description"
               >
                 <DialogTitle id="alert-dialog-title">
-                  {movie.title}
+                  {movieDetalhe.original_title}
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    {movieDetalhe}
+                    {movieDetalhe && movieDetalhe.overview}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>

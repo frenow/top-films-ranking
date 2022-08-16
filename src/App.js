@@ -30,8 +30,6 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [movieDetalhe, setMovieDetalhe] = useState([]);
 
-  const [star, setStar] = useState(0);
-
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = async (id) => {
@@ -40,6 +38,10 @@ function App() {
     setMovieDetalhe(data);
     setOpen(true);
   };  
+
+  const handleNovaLista = () => {
+    console.log(movies)
+  };    
 
   const handleClose = () => {
     setOpen(false);
@@ -62,7 +64,8 @@ function App() {
   useEffect(() => {
     (async () => {
     const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=d416af5d4faee64e25ab001d87aab5c3`);
-    setMovies(data.results);
+    setMovies(data.results.map(d => ({ ...d, star: 0 })));
+    console.log(data.results.map(d => ({ ...d, star: 0 })));
   })();  
 
 }, []);
@@ -98,10 +101,11 @@ function App() {
 
     <div className="App">
       <Button onClick={handleGoogleSignin} fontSize="large" color="primary" variant="contained">Entrar com google</Button>
+      <Button onClick={handleNovaLista} fontSize="large" color="primary" variant="contained">Console nova lista</Button>
 
       {movies.map(movie => (
       <div key={movie.id} className="App-list">
-              <Card sx={{ minWidth: 400 }}>
+              <Card sx={{ minWidth: 300 }}>
                 <CardMedia
                   component="img"
                   height="400"
@@ -113,7 +117,7 @@ function App() {
                 {movie.title}
                 </Typography>
                 </CardContent>
-                <Rating name="ranking-star" value={star} onChange={(event, newValue) => { setStar(newValue) }} /> 
+                <Rating name="ranking-star" value={movie.star} onChange={(event, newValue) => { setMovies(prevState => [...prevState].map(m => m.id === movie.id ? ({...m, star: newValue}) : m))}} /> 
                 <CardActions>
                   <Button size="small" onClick={() => handleClickOpen(movie.id)}>Saiba mais</Button>
                 </CardActions>
